@@ -29,6 +29,38 @@
   <!--  Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
  <!--  Main CSS File -->
+
+  <script>
+  const form = document.getElementById('my-form');
+  const status = document.getElementById('my-form-status');
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: {
+          Accept: 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        status.textContent = 'Thanks  for sending  message!';
+        form.reset();
+      } else {
+        const data = await response.json();
+        const errors = Object.values(data.errors).map((error) => error.message);
+        status.textContent = `Oops! ${errors.join(', ')}`;
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      status.textContent = 'Oops! There was a problem submitting your form.';
+    }
+  });
+</script>
+
  
 
   
@@ -857,38 +889,7 @@ Snapchat. Pinterest. HubSpot. Marketo.  Engage. MailChimp. SharpSpring. Keap. Se
             </div>
 
           </div>
-          <script>
-  const form = document.getElementById('my-form');
-  const status = document.getElementById('my-form-status');
-
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault();
-
-    try {
-      const response = await fetch(form.action, {
-        method: 'POST',
-        body: new FormData(form),
-        headers: {
-          Accept: 'application/json',
-        },
-      });
-
-      if (response.ok) {
-        status.textContent = 'Thanks for your submission!';
-        form.reset();
-      } else {
-        const data = await response.json();
-        const errors = Object.values(data.errors).map((error) => error.message);
-        status.textContent = `Oops! ${errors.join(', ')}`;
-      }
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      status.textContent = 'Oops! There was a problem submitting your form.';
-    }
-  });
-</script>
-
-
+         
           <div class="col-lg-6">
             <form id="my-form" action="https://formspree.io/f/mbjvegpa" method="POST">
               <div class="row gy-4">
@@ -910,12 +911,20 @@ Snapchat. Pinterest. HubSpot. Marketo.  Engage. MailChimp. SharpSpring. Keap. Se
                 </div>
 
                 <div class="col-md-12 text-center">
-                  <div class="loading">Loading</div>
-                  <div class="error-message"></div>
-                  <div class="sent-message">Your message has been sent. Thank you!</div>
-                  <p id="my-form-status"> </p>
+<!--                   <div class="loading">Loading</div>
+                  <div class="error-message"> </div>
+                  <div class="sent-message">Your message has been sent. Thank you!</div> -->
+                 
                   
-                  <button type="submit">Send Message</button>
+<!--                   <button type="submit">Send Message</button> -->
+                  <button id="my-form-button">Submit</button>
+
+  
+<p
+ 
+id="my-form-status"></p>
+
+</form>
                   <p id="my-form-status"></p>
                 </div>
 

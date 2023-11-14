@@ -59,6 +59,11 @@
       status.textContent = 'Oops! There was a problem submitting your form.';
     }
   });
+    window.onbeforeunload = () => {
+  for(const form of document.getElementsByTagName('my-form')) {
+    form.reset();
+  }
+}
 </script>
 
  
